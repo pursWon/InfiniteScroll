@@ -3,7 +3,7 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
-    let limit: Int = 149
+    let limit: Int = 129
     var array = Array<Int>(70...90)
     
     override func viewDidLoad() {
@@ -16,17 +16,24 @@ class ViewController: UIViewController {
     
     func update() {
         guard let last = array.last else { return }
-        // 여기에 조건이 있어야함
+        
         let start = last + 1
         let end = last + 10
         let appendedArray = array + Array<Int>(start...end)
         
         guard let appendedLast = appendedArray.last else { return }
         
-        if appendedLast <= limit {
+        if appendedLast <= limit, limit % 10 == 0 {
             array = appendedArray
-            array += Array<Int>(appendedLast + 1...limit)
             tableView.reloadData()
+        } else if appendedLast <= limit, limit % 10 != 0 {
+            array = appendedArray
+            tableView.reloadData()
+            
+            if limit - appendedLast < 10 {
+                array += Array<Int>(appendedLast + 1...limit)
+                tableView.reloadData()
+            }
         }
     }
 }
