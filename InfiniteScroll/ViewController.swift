@@ -16,7 +16,6 @@ class ViewController: UIViewController {
     
     func update() {
         guard let last = array.last else { return }
-        // 여기에 조건이 있어야함
         let start = last + 1
         let end = last + 10
         let appendedArray = array + Array<Int>(start...end)
