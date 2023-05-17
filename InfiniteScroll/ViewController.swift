@@ -17,23 +17,16 @@ class ViewController: UIViewController {
     func update() {
         guard let last = array.last else { return }
         
-        let start = last + 1
-        let end = last + 10
-        let appendedArray = array + Array<Int>(start...end)
-        
-        guard let appendedLast = appendedArray.last else { return }
-        
-        if appendedLast <= limit, limit % 10 == 0 {
-            array = appendedArray
-            tableView.reloadData()
-        } else if appendedLast <= limit, limit % 10 != 0 {
-            array = appendedArray
-            tableView.reloadData()
+        if last < limit {
+            let start = last + 1
+            var end = last + 10
             
-            if limit - appendedLast < 10 {
-                array += Array<Int>(appendedLast + 1...limit)
-                tableView.reloadData()
+            if end > limit {
+                end = limit
             }
+            
+            array += Array<Int>(start...end)
+            tableView.reloadData()
         }
     }
 }
