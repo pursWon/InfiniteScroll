@@ -1,9 +1,9 @@
 import UIKit
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
-    let limit: Int = 129
+    let limit: Int = 149
     var array = Array<Int>(70...90)
     
     override func viewDidLoad() {
@@ -16,28 +16,22 @@ class ViewController: UIViewController {
     
     func update() {
         guard let last = array.last else { return }
-<<<<<<< HEAD
+        // 여기에 조건이 있어야함
         let start = last + 1
         let end = last + 10
         let appendedArray = array + Array<Int>(start...end)
-=======
->>>>>>> main
         
-        if last < limit {
-            let start = last + 1
-            var end = last + 10
-            
-            if end > limit {
-                end = limit
-            }
-            
-            array += Array<Int>(start...end)
+        guard let appendedLast = appendedArray.last else { return }
+        
+        if appendedLast <= limit {
+            array = appendedArray
+            array += Array<Int>(appendedLast + 1...limit)
             tableView.reloadData()
         }
     }
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return array.count
     }
@@ -51,7 +45,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension ViewController: UITableViewDataSourcePrefetching {
+extension HomeViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         update()
     }
